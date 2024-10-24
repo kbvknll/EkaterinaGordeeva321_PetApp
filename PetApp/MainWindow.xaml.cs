@@ -16,7 +16,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using Microsoft.VisualBasic; // Добавьте это пространство имен
+using Microsoft.VisualBasic; 
 
 namespace PetApp
 {
@@ -35,18 +35,16 @@ namespace PetApp
             {
                 case 1:
                     UserImage.Visibility = Visibility.Visible;
+                    User1Image.Visibility = Visibility.Collapsed;
                     break;
                 case 2:
                     UserImage.Visibility = Visibility.Collapsed;
-                    break;
-                case 3:
-                    UserImage.Visibility = Visibility.Visible;
+                    User1Image.Visibility = Visibility.Visible;
                     break;
                 default:
                     break;
             }
 
-            // Подписываемся на событие изменения выбора в ComboBox
             PetComboBox.SelectionChanged += PetComboBox_SelectionChanged;
         }
 
@@ -75,17 +73,14 @@ namespace PetApp
 
         private void AddPhotoButton_Click(object sender, RoutedEventArgs e)
         {
-            // Открываем диалог выбора файла
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Filter = "Image files (*.png;*.jpeg;*.jpg)|*.png;*.jpeg;*.jpg|All files (*.*)|*.*";
 
             if (openFileDialog.ShowDialog() == true)
             {
-                // Загружаем выбранное изображение
                 var photoPath = openFileDialog.FileName;
                 var newPhoto = new BitmapImage(new System.Uri(photoPath));
 
-                // Добавляем фотографию в соответствующий список в зависимости от выбранного питомца
                 if (PetComboBox.SelectedItem != null)
                 {
                     var selectedPet = PetComboBox.SelectedItem as ComboBoxItem;
@@ -99,7 +94,6 @@ namespace PetApp
                     }
                 }
 
-                // Обновляем отображение фотографий
                 UpdatePetPhotos();
             }
         }
@@ -146,7 +140,6 @@ namespace PetApp
             var button = sender as Button;
             var petPhoto = button.Tag as PetPhoto;
 
-            // Открываем диалог для ввода описания
             var description = Interaction.InputBox("Введите описание фотографии:", "Описание фотографии", petPhoto.Description);
             if (!string.IsNullOrEmpty(description))
             {
@@ -160,7 +153,6 @@ namespace PetApp
             var image = sender as Image;
             var petPhoto = image.Tag as PetPhoto;
 
-            // Открываем новое окно для отображения фотографии и её описания
             var photoViewerWindow = new PhotoViewerWindow(petPhoto.Image, petPhoto.Description);
             photoViewerWindow.ShowDialog();
         }
@@ -171,7 +163,7 @@ namespace PetApp
             var petsListPage = new PetsListPage(pets);
             ContentFrame.Navigate(petsListPage);
             HeaderTextBlock.Visibility = Visibility.Collapsed;
-            ShowPetsListButton.Visibility = Visibility.Collapsed; // Скрываем кнопку "Список питомцев"
+            ShowPetsListButton.Visibility = Visibility.Collapsed; 
         }
 
         private void GoBackButton_Click(object sender, RoutedEventArgs e)
@@ -180,7 +172,7 @@ namespace PetApp
             {
                 ContentFrame.GoBack();
                 HeaderTextBlock.Visibility = Visibility.Visible;
-                ShowPetsListButton.Visibility = Visibility.Visible; // Показываем кнопку "Список питомцев"
+                ShowPetsListButton.Visibility = Visibility.Visible; 
             }
         }
 
@@ -194,16 +186,15 @@ namespace PetApp
 
         private void ContentFrame_Navigated(object sender, NavigationEventArgs e)
         {
-            // Обновляем видимость заголовка в зависимости от текущей страницы
             if (ContentFrame.Content is PetsListPage)
             {
                 HeaderTextBlock.Visibility = Visibility.Collapsed;
-                ShowPetsListButton.Visibility = Visibility.Collapsed; // Скрываем кнопку "Список питомцев"
+                ShowPetsListButton.Visibility = Visibility.Collapsed; 
             }
             else
             {
                 HeaderTextBlock.Visibility = Visibility.Visible;
-                ShowPetsListButton.Visibility = Visibility.Visible; // Показываем кнопку "Список питомцев"
+                ShowPetsListButton.Visibility = Visibility.Visible; 
             }
         }
 

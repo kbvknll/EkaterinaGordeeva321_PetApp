@@ -30,7 +30,6 @@
             <TextBox x:Name="SearchTextBox" Width="200" TextChanged="SearchTextBox_TextChanged"/>
         </StackPanel>
 
-        <!-- Список питомцев -->
         <ListView x:Name="PetsListView" Grid.Row="1" Grid.ColumnSpan="2">
             <ListView.View>
                 <GridView>
